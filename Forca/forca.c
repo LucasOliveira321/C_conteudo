@@ -8,7 +8,42 @@ char palavraSecreta[20];
 char chutes[26];
 int chutesDados = 0;
 
+void adicionaPalavra(){
+    char quer;
+    printf("Voce quer inserir uma nova palavra? (S/N)\n");
+    scanf("%c", &quer);
+
+    if (quer == 'S')
+    {
+        char novaPalavra[20];
+        printf("Qual a nova palavra? \n");
+        scanf("%c", &novaPalavra);
+
+        FILE* f;
+
+        f = fopen("texto.txt", "r+"); 
+
+        if(f == 0) {
+            printf("Banco de dados de palavras não disponível\n\n");
+            exit(1);
+        }
+
+        int qnt;
+        fscanf(f,"%d", &qnt);
+        qnt++;
+
+        fseek(f, 0, SEEK_SET);
+        fprintf(f, "%d", qnt);
+
+        fseek(f, 0, SEEK_END);
+        fprintf(f, "\n%s", novaPalavra);
+
+        fclose(f);
+    }
+}
+
 void abertura(){
+
     printf("******************\n");
     printf("***** A FORCA ****\n");
     printf("******************\n\n");
@@ -110,4 +145,10 @@ int main(){
         chuta();
 
     }while (!acertou() && !enforcou());
+
+	if (acertou()){
+		printf("Parabens !!!");
+	}else{
+		printf("Errou :( !");
+	}
 } 
