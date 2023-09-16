@@ -3,22 +3,20 @@
 #include <locale.h>
 #include "funcao.h"
 
-char** mapa;
-int linhas;
-int coluna;
+MAPA m;
 
 void liberaMapa(){
-    for(int i =0; i < linhas; i++){
-        free(mapa[i]);
+    for(int i =0; i < m.linhas; i++){
+        free(m.mapa[i]);
     }
-    free(mapa);
+    free(m.mapa);
 
 }
 
 void alocaMapa(){
-    mapa = malloc(sizeof(char*) * linhas);
-    for( int i = 0; i < linhas; i++){
-        mapa[i] = malloc(sizeof(char) * (coluna+1));
+    m.mapa = malloc(sizeof(char*) * m.linhas);
+    for( int i = 0; i < m.linhas; i++){
+        m.mapa[i] = malloc(sizeof(char) * (m.coluna+1));
     }
 }
 
@@ -30,12 +28,12 @@ void leMapa(){
         exit(1);
     }
 
-    fscanf(f,"%d %d", &linhas, &coluna);
+    fscanf(f,"%d %d", &(m.linhas), &(m.coluna));
 
     alocaMapa();
     
     for (int i = 0; i < 5; i++){
-        fscanf(f,"%s", mapa[i]);
+        fscanf(f,"%s", m.mapa[i]);
     }
 
     fclose(f); 
@@ -43,7 +41,7 @@ void leMapa(){
 
 void imprimeMapa(){
     for(int i =0; 0 < 5; i++){
-            printf("%s\n", mapa[i]);
+            printf("%s\n", m.mapa[i]);
     }
 }
 
@@ -56,9 +54,9 @@ void move(char direcao){
     int y;
 
     // buscando a posição do @
-    for (int i = 0; i < linhas; i++){
-        for (int j = 0; j < coluna; j++){
-            if(mapa[i][j] == '@'){
+    for (int i = 0; i < m.linhas; i++){
+        for (int j = 0; j < m.coluna; j++){
+            if(m.mapa[i][j] == '@'){
                 x = i;
                 y = j;
                 break;
@@ -68,21 +66,21 @@ void move(char direcao){
     printf("Passou do if");
     switch (direcao){
     case 'a':
-        mapa[x][y-1] = '@';
+        m.mapa[x][y-1] = '@';
         break;
     case 's':
-        mapa[x+1][y] = '@';
+        m.mapa[x+1][y] = '@';
         break;
     case 'w':
-        mapa[x-1][y] = '@';
+        m.mapa[x-1][y] = '@';
         break;
     case 'd':
-        mapa[x][y+1] = '@';
+        m.mapa[x][y+1] = '@';
         break;
     }
 
     printf("Passou do switch");
-    mapa[x][y] = '.';
+    m.mapa[x][y] = '.';
 
 }
 
