@@ -7,26 +7,20 @@ typedef struct no{
 }No;
 
 typedef struct{
-    No *cabeca;
+    No *dadoLista;
     int tam;
 }Lista;
 
 void inserirInicio(Lista *lista, int valor){
     No *novo = malloc(sizeof(No));
     novo->dado = valor;
-    novo->prox = lista->cabeca;
-    lista->cabeca = novo;
+    novo->prox = lista->dadoLista;
+    lista->dadoLista = novo;
     lista->tam++;
 }
 
-void inserirFinal(Lista *lista, int valor){
-    
-
-
-}
-
 void imprimir(Lista *lista){
-    No *comeca = lista->cabeca;
+    No *comeca = lista->dadoLista;
     while(comeca != NULL){
         printf("%d, ", comeca->dado);
         comeca = comeca->prox;
@@ -38,11 +32,10 @@ int main(){
     Lista lista;
     int opcao, valor;
 
-    lista.cabeca = NULL;
+    lista.dadoLista = NULL;
     lista.tam = 0;
 
-    do
-    {
+    do{
         printf(" 1 - Inserir no inicio\n 2 - Imprimir\n 3 - tamanho da lista\n 5 - Sair\n");
         scanf("%d", &opcao);
         switch (opcao) {
